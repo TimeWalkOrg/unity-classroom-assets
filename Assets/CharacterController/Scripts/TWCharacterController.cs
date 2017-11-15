@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class TWCharacterController : MonoBehaviour
 {
+	#region help
 	[SerializeField]
 #if UNITY_EDITOR
-	[Help("KeyBoard \"V\" to toggle between first and third person view\nWASD to move and mouse to look", UnityEditor.MessageType.Info)]
+	[Help("KeyBoard \"V\" to toggle between first and third person view\nWASD to move and mouse to look\nIf cannon != null Left Mouse Click to fire", UnityEditor.MessageType.Info)]
 #endif
 	[Tooltip("Doesn't do anything. Just comments shown in inspector")]
 	private int noFunction;
+	#endregion
 
+	#region vars
 	[Space(10)]
 	public float speed = 5.0f;              // 5f
 	public float jumpMultiplier = 100f;		// 100f
@@ -19,6 +22,7 @@ public class TWCharacterController : MonoBehaviour
 
 	private Camera thisCamera;
 	private Rigidbody thisRigidbody;
+	private CannonComponent cannonRef;
 	private float inputX;
 	private float inputY;
 	private Vector3 moveHorizontal;
@@ -33,6 +37,7 @@ public class TWCharacterController : MonoBehaviour
 	private bool toggleView = false;
 	private Vector3 firstPersonPos = new Vector3(0f, 1.5f, 0f);
 	private Vector3 thirdPersonPos = new Vector3(0f, 2f, -4f);
+	#endregion
 
 	#region mono
 	private void Start()
@@ -40,21 +45,19 @@ public class TWCharacterController : MonoBehaviour
 		thisRigidbody = GetComponent<Rigidbody>();
 		thisCamera = GetComponentInChildren<Camera>();
 		thisCamera.transform.localPosition = firstPersonPos;
+		cannonRef = GetComponentInChildren<CannonComponent>();
 	}
 
 	private void Update()
 	{
-		ToggleView();
-
-		// keyboard shortcut
-		if (Input.GetKeyUp(KeyCode.V))
-			toggleView = !toggleView;
+		ViewControl();
+		JumpControl();
+		FireControl();
 	}
 
 	private void FixedUpdate()
 	{
 		CharacterControl();
-		JumpControl();
 	}
 	#endregion
 
@@ -98,14 +101,28 @@ public class TWCharacterController : MonoBehaviour
 		}
 	}
 
+	private void FireControl()
+	{
+		if (Input.GetMouseButtonUp(0))
+		{
+			if (cannonRef != null)
+				cannonRef.Fire();
+		}
+	}
+
 	private void OnCollisionStay(Collision collision)
 	{
 		isGrounded = true;
 	}
 	#endregion
 
-	private void ToggleView()
+	#region view
+	private void ViewControl()
 	{
+		// keyboard shortcut
+		if (Input.GetKeyUp(KeyCode.V))
+			toggleView = !toggleView;
+
 		if (!toggleView)
 		{
 			if (thisCamera.transform.localPosition != firstPersonPos)
@@ -117,4 +134,5 @@ public class TWCharacterController : MonoBehaviour
 				thisCamera.transform.localPosition = thirdPersonPos;
 		}
 	}
+	#endregion
 }
