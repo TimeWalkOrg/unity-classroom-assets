@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField]
-#if UNITY_EDITOR
-	[Help("WASD to move SPACE to jump", UnityEditor.MessageType.Info)]
-#endif
-	[Tooltip("Doesn't do anything. Just comments shown in inspector")]
-	private int noFunction;
-
 	public float minGroundNormalY = .65f;
 	public float gravityModifier = 1f;
 

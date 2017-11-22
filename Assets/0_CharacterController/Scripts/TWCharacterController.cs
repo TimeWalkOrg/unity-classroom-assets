@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class TWCharacterController : MonoBehaviour
 {
-	#region help
-	[SerializeField]
-#if UNITY_EDITOR
-	[Help("KeyBoard \"V\" to toggle between first and third person view\nWASD to move and mouse to look\nIf cannon != null Left Mouse Click to fire", UnityEditor.MessageType.Info)]
-#endif
-	[Tooltip("Doesn't do anything. Just comments shown in inspector")]
-	private int noFunction;
-	#endregion
-
 	#region vars
 	[Space(10)]
 	public float speed = 5.0f;              // 5f
