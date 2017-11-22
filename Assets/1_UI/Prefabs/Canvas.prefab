@@ -747,7 +747,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: 'WASD to move
+  m_Text: 'AD to move
 
     Space to Jump'
 --- !u!114 &114370612006556514
